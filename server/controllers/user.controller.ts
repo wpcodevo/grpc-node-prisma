@@ -1,6 +1,6 @@
 import * as grpc from '@grpc/grpc-js';
-import { GetMeInput__Output } from '../../pb/userPackage/GetMeInput';
-import { UserResponse } from '../../pb/userPackage/UserResponse';
+import { GetMeInput__Output } from '../../pb/auth/GetMeInput';
+import { UserResponse } from '../../pb/auth/UserResponse';
 import { deserializeUser } from '../middleware/deserializeUser';
 
 export const getMeHandler = async (

@@ -6,12 +6,12 @@ import {
   findUser,
   signTokens,
 } from '../services/user.service';
-import { SignUpUserInput__Output } from '../../pb/userPackage/SignUpUserInput';
-import { SignInUserInput__Output } from '../../pb/userPackage/SignInUserInput';
-import { SignInUserResponse__Output } from '../../pb/userPackage/SignInUserResponse';
-import { SignUpUserResponse } from '../../pb/userPackage/SignUpUserResponse';
-import { RefreshTokenInput__Output } from '../../pb/userPackage/RefreshTokenInput';
-import { RefreshTokenResponse } from '../../pb/userPackage/RefreshTokenResponse';
+import { SignUpUserInput__Output } from '../../pb/auth/SignUpUserInput';
+import { SignInUserInput__Output } from '../../pb/auth/SignInUserInput';
+import { SignInUserResponse__Output } from '../../pb/auth/SignInUserResponse';
+import { SignUpUserResponse } from '../../pb/auth/SignUpUserResponse';
+import { RefreshTokenInput__Output } from '../../pb/auth/RefreshTokenInput';
+import { RefreshTokenResponse } from '../../pb/auth/RefreshTokenResponse';
 import { signJwt, verifyJwt } from '../utils/jwt';
 import customConfig from '../config/default';
 import redisClient from '../utils/connectRedis';
