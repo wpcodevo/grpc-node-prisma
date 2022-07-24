@@ -39,7 +39,6 @@ server.addService(authPackage.AuthService.service, {
   SignInUser: (req, res) => loginHandler(req, res),
   RefreshToken: (req, res) => refreshAccessTokenHandler(req, res),
   GetMe: (req, res) => getMeHandler(req, res),
-  VerifyEmail: (req, res) => {},
 } as AuthServiceHandlers);
 server.bindAsync(
   `0.0.0.0:${PORT}`,
