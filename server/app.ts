@@ -1,8 +1,8 @@
 import path from 'path';
 import * as grpc from '@grpc/grpc-js';
 import * as protoLoader from '@grpc/proto-loader';
-import { ProtoGrpcType } from '../pb/auth_service';
-import { AuthServiceHandlers } from '../pb/userPackage/AuthService';
+import { ProtoGrpcType } from '../pb/services';
+import { AuthServiceHandlers } from '../pb/auth/AuthService';
 import {
   loginHandler,
   refreshAccessTokenHandler,
@@ -31,14 +31,15 @@ const proto = grpc.loadPackageDefinition(
   packageDef
 ) as unknown as ProtoGrpcType;
 
-const userPackage = proto.userPackage;
+const authPackage = proto.auth;
 
 const server = new grpc.Server();
-server.addService(userPackage.AuthService.service, {
+server.addService(authPackage.AuthService.service, {
   SignUpUser: (req, res) => registerHandler(req, res),
   SignInUser: (req, res) => loginHandler(req, res),
   RefreshToken: (req, res) => refreshAccessTokenHandler(req, res),
   GetMe: (req, res) => getMeHandler(req, res),
+  VerifyEmail: (req, res) => {},
 } as AuthServiceHandlers);
 server.bindAsync(
   `0.0.0.0:${PORT}`,

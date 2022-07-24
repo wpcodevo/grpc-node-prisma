@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package userPackage;
+package auth;
 
 message SignInUserInput {
   string email = 1;

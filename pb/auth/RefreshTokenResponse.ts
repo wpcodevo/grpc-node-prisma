@@ -1,4 +1,4 @@
-// Original file: proto/auth_service.proto
+// Original file: proto/services.proto
 
 
 export interface RefreshTokenResponse {

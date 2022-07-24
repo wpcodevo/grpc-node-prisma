@@ -1,20 +1,15 @@
 import type * as grpc from '@grpc/grpc-js';
 import type { MessageTypeDefinition } from '@grpc/proto-loader';
 
-import type { AuthServiceClient as _userPackage_AuthServiceClient, AuthServiceDefinition as _userPackage_AuthServiceDefinition } from './userPackage/AuthService';
+import type { AuthServiceClient as _auth_AuthServiceClient, AuthServiceDefinition as _auth_AuthServiceDefinition } from './auth/AuthService';
 
 type SubtypeConstructor<Constructor extends new (...args: any) => any, Subtype> = {
   new(...args: ConstructorParameters<Constructor>): Subtype;
 };
 
 export interface ProtoGrpcType {
-  google: {
-    protobuf: {
-      Timestamp: MessageTypeDefinition
-    }
-  }
-  userPackage: {
-    AuthService: SubtypeConstructor<typeof grpc.Client, _userPackage_AuthServiceClient> & { service: _userPackage_AuthServiceDefinition }
+  auth: {
+    AuthService: SubtypeConstructor<typeof grpc.Client, _auth_AuthServiceClient> & { service: _auth_AuthServiceDefinition }
     GenericResponse: MessageTypeDefinition
     GetMeInput: MessageTypeDefinition
     RefreshTokenInput: MessageTypeDefinition
@@ -25,6 +20,12 @@ export interface ProtoGrpcType {
     SignUpUserResponse: MessageTypeDefinition
     User: MessageTypeDefinition
     UserResponse: MessageTypeDefinition
+    VerifyEmailInput: MessageTypeDefinition
+  }
+  google: {
+    protobuf: {
+      Timestamp: MessageTypeDefinition
+    }
   }
 }
 

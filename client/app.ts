@@ -1,7 +1,7 @@
 import path from 'path';
 import * as grpc from '@grpc/grpc-js';
 import * as protoLoader from '@grpc/proto-loader';
-import { ProtoGrpcType } from '../pb/auth_service';
+import { ProtoGrpcType } from '../pb/services';
 import customConfig from '../server/config/default';
 
 const options: protoLoader.Options = {
@@ -12,7 +12,7 @@ const options: protoLoader.Options = {
   oneofs: true,
 };
 const PORT = customConfig.port;
-const PROTO_FILE = '../proto/auth_service.proto';
+const PROTO_FILE = '../proto/services.proto';
 const packageDef = protoLoader.loadSync(
   path.resolve(__dirname, PROTO_FILE),
   options
@@ -22,7 +22,7 @@ const proto = grpc.loadPackageDefinition(
   packageDef
 ) as unknown as ProtoGrpcType;
 
-const client = new proto.userPackage.AuthService(
+const client = new proto.auth.AuthService(
   `0.0.0.0:${PORT}`,
   grpc.credentials.createInsecure()
 );

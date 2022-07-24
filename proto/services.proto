@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package userPackage;
+package auth;
 
 import "user.proto";
 import "rpc_signup_user.proto";
@@ -10,13 +10,15 @@ service AuthService {
   rpc SignUpUser(SignUpUserInput) returns (SignUpUserResponse) {}
   rpc SignInUser(SignInUserInput) returns (SignInUserResponse) {}
   rpc RefreshToken(RefreshTokenInput) returns (RefreshTokenResponse) {}
+  rpc VerifyEmail(VerifyEmailInput) returns (GenericResponse) {}
   rpc GetMe(GetMeInput) returns (UserResponse) {}
 }
 
 message GetMeInput { string access_token = 1; }
 message RefreshTokenInput { string refresh_token = 1; }
-
 message RefreshTokenResponse {
   string access_token = 1;
   string refresh_token = 2;
 }
+
+message VerifyEmailInput { string verification_code = 1; }
