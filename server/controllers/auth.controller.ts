@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
 import * as grpc from '@grpc/grpc-js';
 import {
@@ -5,20 +6,24 @@ import {
   findUniqueUser,
   findUser,
   signTokens,
+  updateUser,
 } from '../services/user.service';
-import { SignUpUserInput__Output } from '../../pb/userPackage/SignUpUserInput';
-import { SignInUserInput__Output } from '../../pb/userPackage/SignInUserInput';
-import { SignInUserResponse__Output } from '../../pb/userPackage/SignInUserResponse';
-import { SignUpUserResponse } from '../../pb/userPackage/SignUpUserResponse';
-import { RefreshTokenInput__Output } from '../../pb/userPackage/RefreshTokenInput';
-import { RefreshTokenResponse } from '../../pb/userPackage/RefreshTokenResponse';
+import { SignUpUserInput__Output } from '../../pb/auth/SignUpUserInput';
+import { SignInUserInput__Output } from '../../pb/auth/SignInUserInput';
+import { SignInUserResponse__Output } from '../../pb/auth/SignInUserResponse';
+import { SignUpUserResponse } from '../../pb/auth/SignUpUserResponse';
+import { RefreshTokenInput__Output } from '../../pb/auth/RefreshTokenInput';
+import { RefreshTokenResponse } from '../../pb/auth/RefreshTokenResponse';
 import { signJwt, verifyJwt } from '../utils/jwt';
 import customConfig from '../config/default';
 import redisClient from '../utils/connectRedis';
+import { VerifyEmailInput__Output } from '../../pb/auth/VerifyEmailInput';
+import { GenericResponse } from '../../pb/auth/GenericResponse';
+import Email from '../utils/email';
 
 export const registerHandler = async (
   req: grpc.ServerUnaryCall<SignUpUserInput__Output, SignUpUserResponse>,
-  res: grpc.sendUnaryData<SignUpUserResponse>
+  res: grpc.sendUnaryData<GenericResponse>
 ) => {
   try {
     const hashedPassword = await bcrypt.hash(req.request.password, 12);
@@ -27,25 +32,30 @@ export const registerHandler = async (
       name: req.request.name,
       password: hashedPassword,
       photo: req.request.photo,
+      verified: false,
       provider: 'local',
     });
 
-    res(null, {
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        photo: user.photo!,
-        provider: user.provider!,
-        role: user.role!,
-        created_at: {
-          seconds: user.created_at.getTime() / 1000,
-        },
-        updated_at: {
-          seconds: user.updated_at.getTime() / 1000,
-        },
-      },
-    });
+    const verification_code = crypto.randomBytes(20).toString('hex');
+    const hashed_verification_code = crypto
+      .createHash('sha256')
+      .update(verification_code)
+      .digest('hex');
+    await updateUser(
+      { id: user.id },
+      { verification_code: hashed_verification_code }
+    );
+    const redirectUrl = `https://localhost:3000/api/verifyemail?code=${verification_code}`;
+    try {
+      await new Email(user, redirectUrl).sendVerificationCode();
+      res(null, { status: 'success', message: 'Email verification code sent' });
+    } catch (error: any) {
+      await updateUser({ id: user.id }, { verification_code: null });
+      res({
+        code: grpc.status.INTERNAL,
+        message: error.message,
+      });
+    }
   } catch (err: any) {
     if (err.code === 'P2002') {
       res({
@@ -67,6 +77,13 @@ export const loginHandler = async (
   try {
     // Get the user from the collection
     const user = await findUser({ email: req.request.email });
+
+    if (user?.verified) {
+      res({
+        code: grpc.status.INVALID_ARGUMENT,
+        message: 'Account not verified',
+      });
+    }
 
     // Check if user exist and password is correct
     if (!user || !(await bcrypt.compare(req.request.password, user.password))) {
@@ -150,6 +167,39 @@ export const refreshAccessTokenHandler = async (
 
     // Send response
     res(null, { access_token, refresh_token });
+  } catch (err: any) {
+    res({
+      code: grpc.status.INTERNAL,
+      message: err.message,
+    });
+  }
+};
+
+export const verifyEmailHandler = async (
+  req: grpc.ServerUnaryCall<VerifyEmailInput__Output, GenericResponse>,
+  res: grpc.sendUnaryData<GenericResponse>
+) => {
+  try {
+    const verification_code = crypto
+      .createHash('sha256')
+      .update(req.request.verification_code)
+      .digest('hex');
+
+    const user = await findUniqueUser({ verification_code });
+
+    if (!user) {
+      res({
+        code: grpc.status.UNAUTHENTICATED,
+        message: 'Could not verify email',
+      });
+    }
+
+    await updateUser(
+      { id: user.id },
+      { verified: true, verification_code: null }
+    );
+
+    res(null, { status: 'success', message: 'Email verified successfully' });
   } catch (err: any) {
     res({
       code: grpc.status.INTERNAL,

@@ -37,7 +37,7 @@ client.waitForReady(deadline, (err) => {
 });
 
 function onClientReady() {
-  refreshToken();
+  verifyEmail('60b82a93d1909ea9741052692f9d6ea3507b37f7');
 }
 
 function signUpUser() {
@@ -59,7 +59,7 @@ function signUpUser() {
   );
 }
 
-function signInUser() {
+function signInUser(email: string, password: string) {
   client.SignInUser(
     {
       email: 'admin@admin.com',
@@ -75,10 +75,10 @@ function signInUser() {
   );
 }
 
-function refreshToken() {
+function refreshToken(refresh_token: string) {
   client.RefreshToken(
     {
-      refresh_token: '',
+      refresh_token,
     },
     (err, res) => {
       if (err) {
@@ -90,10 +90,10 @@ function refreshToken() {
   );
 }
 
-function getAuthenticatedUser() {
+function getAuthenticatedUser(access_token: string) {
   client.getMe(
     {
-      access_token: '',
+      access_token,
     },
     (err, res) => {
       if (err) {
@@ -103,4 +103,14 @@ function getAuthenticatedUser() {
       console.log(res);
     }
   );
+}
+
+function verifyEmail(verification_code: string) {
+  client.verifyEmail({ verification_code }, (err, res) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    console.log(res);
+  });
 }

@@ -7,6 +7,7 @@ import {
   loginHandler,
   refreshAccessTokenHandler,
   registerHandler,
+  verifyEmailHandler,
 } from './controllers/auth.controller';
 import customConfig from './config/default';
 import connectDB from './utils/prisma';
@@ -21,7 +22,7 @@ const options: protoLoader.Options = {
 };
 
 const PORT = customConfig.port;
-const PROTO_FILE = '../proto/auth_service.proto';
+const PROTO_FILE = '../proto/services.proto';
 const packageDef = protoLoader.loadSync(
   path.resolve(__dirname, PROTO_FILE),
   options
@@ -39,7 +40,7 @@ server.addService(authPackage.AuthService.service, {
   SignInUser: (req, res) => loginHandler(req, res),
   RefreshToken: (req, res) => refreshAccessTokenHandler(req, res),
   GetMe: (req, res) => getMeHandler(req, res),
-  VerifyEmail: (req, res) => {},
+  VerifyEmail: (req, res) => verifyEmailHandler(req, res),
 } as AuthServiceHandlers);
 server.bindAsync(
   `0.0.0.0:${PORT}`,

@@ -6,13 +6,16 @@
   "scripts": {
     "start:server": "ts-node-dev --respawn --transpile-only server/app.ts",
     "start:client": "ts-node-dev --transpile-only client/app.ts",
-    "db:migrate": "npx prisma migrate dev --name updated-user-entity --create-only --schema ./server/prisma/schema.prisma && yarn prisma generate --schema ./server/prisma/schema.prisma",
+    "db:migrate": "npx prisma migrate dev --name added-verificationCode --create-only --schema ./server/prisma/schema.prisma && yarn prisma generate --schema ./server/prisma/schema.prisma",
     "db:push": "npx prisma db push --schema ./server/prisma/schema.prisma"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/google-protobuf": "^3.15.6",
+    "@types/html-to-text": "^8.1.0",
     "@types/jsonwebtoken": "^8.5.8",
+    "@types/nodemailer": "^6.4.4",
+    "@types/pug": "^2.0.6",
     "prisma": "^4.1.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.7.4"
@@ -24,7 +27,10 @@
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.1",
     "google-protobuf": "^3.20.1",
+    "html-to-text": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
+    "nodemailer": "^6.7.7",
+    "pug": "^3.0.2",
     "redis": "^4.2.0"
   }
 }
