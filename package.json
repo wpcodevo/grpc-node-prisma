@@ -1,0 +1,30 @@
+{
+  "name": "node-grpc-prisma",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start:server": "ts-node-dev --respawn --transpile-only server/app.ts",
+    "start:client": "ts-node-dev --transpile-only client/app.ts",
+    "db:migrate": "npx prisma migrate dev --name updated-user-entity --create-only --schema ./server/prisma/schema.prisma && yarn prisma generate --schema ./server/prisma/schema.prisma",
+    "db:push": "npx prisma db push --schema ./server/prisma/schema.prisma"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/google-protobuf": "^3.15.6",
+    "@types/jsonwebtoken": "^8.5.8",
+    "prisma": "^4.1.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.6.8",
+    "@grpc/proto-loader": "^0.7.0",
+    "@prisma/client": "^4.1.0",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.0.1",
+    "google-protobuf": "^3.20.1",
+    "jsonwebtoken": "^8.5.1",
+    "redis": "^4.2.0"
+  }
+}
