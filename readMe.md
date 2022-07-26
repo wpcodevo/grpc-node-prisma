@@ -1,4 +1,4 @@
-# How to build a Node.js gRPC Server and Client with Prisma and PostgreSQL
+# How to build a Node.js gRPC Server and Client
 
 ### 1. Build a Node.js gRPC Server and Client: Register and Login User
 
