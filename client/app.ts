@@ -35,9 +35,11 @@ client.waitForReady(deadline, (err) => {
   }
   onClientReady();
 });
+// (...) code above
 
+// [...] Register new user
 function onClientReady() {
-  refreshToken();
+  signUpUser();
 }
 
 function signUpUser() {

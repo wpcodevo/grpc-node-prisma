@@ -21,7 +21,7 @@ const options: protoLoader.Options = {
 };
 
 const PORT = customConfig.port;
-const PROTO_FILE = '../proto/auth_service.proto';
+const PROTO_FILE = '../proto/services.proto';
 const packageDef = protoLoader.loadSync(
   path.resolve(__dirname, PROTO_FILE),
   options
