@@ -39,7 +39,7 @@ client.waitForReady(deadline, (err) => {
 
 // [...] Register new user
 function onClientReady() {
-  signUpUser();
+  getAuthenticatedUser();
 }
 
 function signUpUser() {
@@ -95,7 +95,8 @@ function refreshToken() {
 function getAuthenticatedUser() {
   client.getMe(
     {
-      access_token: '',
+      access_token:
+        'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNGI3Mjc0ZC0xNjE2LTRhMGYtYjEyZS03ODEyMTlmMDkxNWIiLCJpYXQiOjE2NTg4NjIxMTMsImV4cCI6MTY1ODg2MzAxM30.KI00SRt4PfHuQ9CZwbnPE2Q-nIwQyb5tuZOrgUkbPC8ln3_EuuRN_AWfNKviNVLMuy02LxR_biG8JlmbnAEXpA',
     },
     (err, res) => {
       if (err) {
