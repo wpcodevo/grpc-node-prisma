@@ -12,7 +12,15 @@ import {
 import customConfig from './config/default';
 import connectDB from './utils/prisma';
 import { getMeHandler } from './controllers/user.controller';
+// [...] 👆 other imports
+import nodemailer from 'nodemailer';
 
+(async function () {
+  const credentials = await nodemailer.createTestAccount();
+  console.log(credentials);
+})();
+
+// [...] 👇 Remaining code
 const options: protoLoader.Options = {
   keepCase: true,
   longs: String,
