@@ -78,7 +78,7 @@ export const loginHandler = async (
     // Get the user from the collection
     const user = await findUser({ email: req.request.email });
 
-    if (user?.verified) {
+    if (!user?.verified) {
       res({
         code: grpc.status.INVALID_ARGUMENT,
         message: 'Account not verified',

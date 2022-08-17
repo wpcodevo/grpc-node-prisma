@@ -37,7 +37,7 @@ client.waitForReady(deadline, (err) => {
 });
 
 function onClientReady() {
-  verifyEmail('60b82a93d1909ea9741052692f9d6ea3507b37f7');
+  verifyEmail('bd0eee08b61af0665eb2963991ade35e315abf50');
 }
 
 function signUpUser() {
