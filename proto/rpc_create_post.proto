@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package post;
+
+message CreatePostRequest {
+  string Title = 1;
+  string Content = 2;
+  string Image = 3;
+  string User = 4;
+  bool Published = 5;
+}

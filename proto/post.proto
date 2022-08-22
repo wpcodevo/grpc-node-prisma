@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+message Post {
+  string id = 1;
+  string title = 2;
+  string content = 3;
+  string image = 4;
+  bool published = 5;
+  string user = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+}
+
+message PostResponse { Post post = 1; }

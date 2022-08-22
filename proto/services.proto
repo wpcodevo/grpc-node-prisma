@@ -1,10 +1,12 @@
 syntax = "proto3";
 
-package auth;
-
 import "user.proto";
 import "rpc_signup_user.proto";
 import "rpc_signin_user.proto";
+
+import "post.proto";
+import "rpc_create_post.proto";
+import "rpc_update_post.proto";
 
 service AuthService {
   rpc SignUpUser(SignUpUserInput) returns (GenericResponse) {}
@@ -22,3 +24,21 @@ message RefreshTokenResponse {
 }
 
 message VerifyEmailInput { string verification_code = 1; }
+
+// Post Service
+service PostService {
+  rpc CreatePost(CreatePostRequest) returns (PostResponse) {}
+  rpc GetPost(PostRequest) returns (PostResponse) {}
+  rpc GetPosts(GetPostsRequest) returns (stream Post) {}
+  rpc UpdatePost(UpdatePostRequest) returns (PostResponse) {}
+  rpc DeletePost(PostRequest) returns (DeletePostResponse) {}
+}
+
+message GetPostsRequest {
+  int64 page = 1;
+  int64 limit = 2;
+}
+
+message PostRequest { string Id = 1; }
+
+message DeletePostResponse { bool success = 1; }

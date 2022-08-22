@@ -12,12 +12,12 @@ import { SignUpUserInput__Output } from '../../pb/auth/SignUpUserInput';
 import { SignInUserInput__Output } from '../../pb/auth/SignInUserInput';
 import { SignInUserResponse__Output } from '../../pb/auth/SignInUserResponse';
 import { SignUpUserResponse } from '../../pb/auth/SignUpUserResponse';
-import { RefreshTokenInput__Output } from '../../pb/auth/RefreshTokenInput';
-import { RefreshTokenResponse } from '../../pb/auth/RefreshTokenResponse';
+import { RefreshTokenInput__Output } from '../../pb/RefreshTokenInput';
+import { RefreshTokenResponse } from '../../pb/RefreshTokenResponse';
 import { signJwt, verifyJwt } from '../utils/jwt';
 import customConfig from '../config/default';
 import redisClient from '../utils/connectRedis';
-import { VerifyEmailInput__Output } from '../../pb/auth/VerifyEmailInput';
+import { VerifyEmailInput__Output } from '../../pb/VerifyEmailInput';
 import { GenericResponse } from '../../pb/auth/GenericResponse';
 import Email from '../utils/email';
 
@@ -78,7 +78,7 @@ export const loginHandler = async (
     // Get the user from the collection
     const user = await findUser({ email: req.request.email });
 
-    if (user?.verified) {
+    if (!user?.verified) {
       res({
         code: grpc.status.INVALID_ARGUMENT,
         message: 'Account not verified',
