@@ -1,29 +1,8 @@
 syntax = "proto3";
 
-import "user.proto";
-import "rpc_signup_user.proto";
-import "rpc_signin_user.proto";
-
 import "post.proto";
 import "rpc_create_post.proto";
 import "rpc_update_post.proto";
-
-service AuthService {
-  rpc SignUpUser(SignUpUserInput) returns (GenericResponse) {}
-  rpc SignInUser(SignInUserInput) returns (SignInUserResponse) {}
-  rpc RefreshToken(RefreshTokenInput) returns (RefreshTokenResponse) {}
-  rpc VerifyEmail(VerifyEmailInput) returns (GenericResponse) {}
-  rpc GetMe(GetMeInput) returns (UserResponse) {}
-}
-
-message GetMeInput { string access_token = 1; }
-message RefreshTokenInput { string refresh_token = 1; }
-message RefreshTokenResponse {
-  string access_token = 1;
-  string refresh_token = 2;
-}
-
-message VerifyEmailInput { string verification_code = 1; }
 
 // Post Service
 service PostService {
@@ -39,6 +18,6 @@ message GetPostsRequest {
   int64 limit = 2;
 }
 
-message PostRequest { string Id = 1; }
+message PostRequest { string id = 1; }
 
 message DeletePostResponse { bool success = 1; }

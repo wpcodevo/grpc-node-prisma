@@ -5,32 +5,38 @@
   "license": "MIT",
   "scripts": {
     "start:server": "ts-node-dev --respawn --transpile-only server/app.ts",
-    "start:client": "ts-node-dev --transpile-only client/auth-client.ts",
-    "db:migrate": "npx prisma migrate dev --name post-entity --create-only --schema ./server/prisma/schema.prisma && yarn prisma generate --schema ./server/prisma/schema.prisma",
+    "start:client": "ts-node-dev --respawn --transpile-only client/app.ts",
+    "db:migrate": "npx prisma migrate dev --name post-entity --create-only --schema ./server/prisma/schema.prisma",
+    "db:generate": " npx prisma generate --schema ./server/prisma/schema.prisma",
     "db:push": "npx prisma db push --schema ./server/prisma/schema.prisma"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
+    "@types/express": "^4.17.13",
     "@types/google-protobuf": "^3.15.6",
     "@types/html-to-text": "^8.1.0",
     "@types/jsonwebtoken": "^8.5.8",
+    "@types/morgan": "^1.9.3",
     "@types/nodemailer": "^6.4.4",
     "@types/pug": "^2.0.6",
-    "prisma": "^4.1.0",
+    "morgan": "^1.10.0",
+    "prisma": "^4.3.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.7.4"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.6.8",
     "@grpc/proto-loader": "^0.7.0",
-    "@prisma/client": "^4.1.0",
+    "@prisma/client": "^4.3.1",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.1",
+    "express": "^4.18.1",
     "google-protobuf": "^3.20.1",
     "html-to-text": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
     "nodemailer": "^6.7.7",
     "pug": "^3.0.2",
-    "redis": "^4.2.0"
+    "redis": "^4.2.0",
+    "zod": "^3.18.0"
   }
 }

@@ -3,10 +3,10 @@ syntax = "proto3";
 package post;
 
 message UpdatePostRequest {
-  string Id = 1;
-  optional string Title = 2;
-  optional string Content = 3;
-  optional string Image = 4;
-  optional string User = 5;
-  optional bool Published = 6;
+  string id = 1;
+  optional string title = 2;
+  optional string content = 3;
+  optional string category = 4;
+  optional string image = 5;
+  optional bool published = 6;
 }

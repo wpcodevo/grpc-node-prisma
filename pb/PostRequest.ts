@@ -2,9 +2,9 @@
 
 
 export interface PostRequest {
-  'Id'?: (string);
+  'id'?: (string);
 }
 
 export interface PostRequest__Output {
-  'Id': (string);
+  'id': (string);
 }

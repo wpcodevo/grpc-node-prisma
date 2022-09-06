@@ -2,17 +2,17 @@
 
 
 export interface CreatePostRequest {
-  'Title'?: (string);
-  'Content'?: (string);
-  'Image'?: (string);
-  'User'?: (string);
-  'Published'?: (boolean);
+  'title'?: (string);
+  'content'?: (string);
+  'category'?: (string);
+  'image'?: (string);
+  'published'?: (boolean);
 }
 
 export interface CreatePostRequest__Output {
-  'Title': (string);
-  'Content': (string);
-  'Image': (string);
-  'User': (string);
-  'Published': (boolean);
+  'title': (string);
+  'content': (string);
+  'category': (string);
+  'image': (string);
+  'published': (boolean);
 }

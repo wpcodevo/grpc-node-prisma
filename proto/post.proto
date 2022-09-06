@@ -6,9 +6,9 @@ message Post {
   string id = 1;
   string title = 2;
   string content = 3;
-  string image = 4;
-  bool published = 5;
-  string user = 6;
+  string category = 4;
+  string image = 5;
+  bool published = 6;
   google.protobuf.Timestamp created_at = 7;
   google.protobuf.Timestamp updated_at = 8;
 }
